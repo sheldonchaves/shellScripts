@@ -21,11 +21,24 @@ declare -a tags=(
 					)
 
 generate_number(){
+	# $1 max number
+	# USAGE: new_var=$(generate_number 100000)
 	shuf -i 1-$1 -n 1
 }
 
+replace_tag_content(){
+	# $1 tag
+	# $2 new value
+	# $3 file
+	# USAGE: replace_tag_content a das b.xml
+	sed -i "s/\(<$1.*>\).*\(<\/$1.*\)/\1$2\2/" $3
+}
+
 remove_tag () {
-   sed -i '/<'$2'>/,/<\/'$2'>/d' $1
+	# $1 tag
+	# $2 file
+	# USAGE: remove_tag li:Amostra teste2.xml
+	sed -i '/<'$1'>/,/<\/'$1'>/d' $2
 } 
 
 generate () {
@@ -53,14 +66,15 @@ generate () {
 	#done
 }
 
-teste=$(generate_number 100000)
+#replace_tag_content a das b.xml
+remove_tag li:Amostra teste2.xml
 
-echo $teste
+#echo $teste
 
-new_cpf=bash ./util/cpf.sh
-echo $new_cpf
+#new_cpf=bash ./util/cpf.sh
+#echo $new_cpf
 
-array=( "0", "1", "3" )
+#array=( "0", "1", "3" )
 
-generate teste5 "${array[@]}"
+#generate teste5 "${array[@]}"
 
